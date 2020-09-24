@@ -2,15 +2,26 @@ package dev.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+
+import com.sun.istack.NotNull;
+
 
 public class CollegueDto {
 
 	private Integer id=null;
+	@NotNull
 	private String matricule;
+	@NotBlank
 	private String nom;
+	@NotBlank
 	private String prenom;
 	private String email;
+	@NotNull
+	@Past
     private LocalDate dateNaissance;
+    @NotNull
 	private String photoUrl;
 	
 	public CollegueDto(Integer id, String matricule, String nom, String prenom, String email, LocalDate dateNaissance,

@@ -1,6 +1,7 @@
 package dev.entite;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,11 +24,11 @@ public class Collegue extends GenelarEntity {
 
 	}
 
-	public Collegue(String matricule, String nom, String prenom, String email, LocalDate dateNaissance, String photoUrl) {
-		this.matricule = matricule;
+
+	public Collegue(String nom, String prenom, LocalDate dateNaissance, String photoUrl) {
+		this.matricule = UUID.randomUUID().toString();
 		this.nom = nom;
 		this.prenom = prenom;
-		this.email = email;
 		this.dateNaissance = dateNaissance;
 		this.photoUrl = photoUrl;
 	}

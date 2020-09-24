@@ -96,39 +96,21 @@ public class CollegueService {
 	 * @param photoUrl l'url de l'image du collegue à ajouter
 	 * @return un objet collegue.
 	 */
+
 	@Transactional
-	public Collegue addCollegue(String nom, String prenom, String email, LocalDate dateNaissance,
-			String photoUrl) {
-			
-		return colRepo.save(new Collegue(UUID.randomUUID().toString(),nom,prenom,email,dateNaissance,photoUrl));
+	public Collegue creerCollegue(String nom, String prenom, LocalDate dateNaissance, String photoUrl) {
+		Collegue collegue = new Collegue(nom, prenom, dateNaissance, photoUrl);
+
+		return colRepo.save(collegue);
 	}
 
 	
 	
-	/**
-	 * 
-	 * @param id l'id du Collegue
-	 * @param matricule le matricule du Collegue a metre a jour
-	 * @param nom le nom du Collegue a metre a jour
-	 * @param prenom le prenom du Collegue a metre a jour
-	 * @param email l'email du Collegue a metre a jour
-	 * @param dateNaissance la date de naissance du Collegue a metre a jour
-	 * @param photoUrl l'url de l'image du Collegue a metre a jour
-	 * @return un objet collegue
-	 */
-	public Collegue updateCollegue(Integer id, String matricule, String nom, String prenom, String email,
-			LocalDate dateNaissance, String photoUrl) {
-			Optional<Collegue> collegueToUpdate=this.getById(id);
-			if(collegueToUpdate.isPresent()) {
-				collegueToUpdate.get().setMatricule(matricule);
-				collegueToUpdate.get().setNom(nom);
-				collegueToUpdate.get().setPrenom(prenom);
-				collegueToUpdate.get().setDateNaissance(dateNaissance);
-				collegueToUpdate.get().setEmail(email);
-				collegueToUpdate.get().setPhotoUrl(photoUrl);
-			}
-			return colRepo.save(collegueToUpdate.get());
-
+	@Transactional
+	public Collegue updateCollegue(String matricule, String email, String urlPhoto) {
+		colRepo.update(matricule, email, urlPhoto);
+		return colRepo.findByMatricule(matricule)
+				.orElseThrow(() -> new RuntimeException("erreur : actualisation Collegue"));
 	}
 
 	/**

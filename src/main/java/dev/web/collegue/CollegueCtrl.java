@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import dev.dto.CollegueDto;
@@ -59,35 +62,29 @@ public class CollegueCtrl {
 	 * @param collegueDto un objet collegueDto au format json
 	 * @return un objet collegueDto au format json
 	 */
-	@PostMapping
-	public ResponseEntity<?> newCollegue(@RequestBody CollegueDto collegueDto) {
-			Collegue newCollegue = colServ.addCollegue(
-					collegueDto.getNom(),
-					collegueDto.getPrenom(),
-					collegueDto.getEmail(),
-					collegueDto.getDateNaissance(),
-					collegueDto.getPhotoUrl()
-					);
 
-			return ResponseEntity.ok(newCollegue);
+	@PostMapping
+	public ResponseEntity<?> newCollegue(@RequestBody @Valid ColleguerequestDto colreq, BindingResult resValid) {
+
+		if (!resValid.hasErrors()) {
+			Collegue collegue = colServ.creerCollegue(colreq.getNom(), colreq.getPrenoms(),
+					colreq.getDateNaissance(), colreq.getPhotoUrl());
+
+			return ResponseEntity.ok(collegue);
+		} else {
+			return ResponseEntity.badRequest().body("tous les champs sont obligatoires !");
+		}
+
 	}
 	
-	/**
-	 * 
-	 * @param collegueDto un objet collegueDto au format json
-	 * @return un objet collegueDto au format json
-	 */
-	@PutMapping
-	public ResponseEntity<?> editUser(@RequestBody CollegueDto collegueDto) {
-		Collegue editCollegue = colServ.updateCollegue(
-				collegueDto.getId(),
-				collegueDto.getMatricule(),
-				collegueDto.getNom(),
-				collegueDto.getPrenom(),
-				collegueDto.getEmail(),
-				collegueDto.getDateNaissance(),
-				collegueDto.getPhotoUrl()
-				);
+
+	
+	@PatchMapping("/{matricule}")
+	public ResponseEntity<?> editUser(@PathVariable String matricule,
+			@RequestBody @Valid CollegueRequestDtoPatch collegueDto, BindingResult resValid) {
+
+		Collegue editCollegue = colServ.updateCollegue(matricule, collegueDto.getEmail(),
+				collegueDto.getPhotoUrl());
 		return ResponseEntity.ok(editCollegue);
 	}
 	/**
