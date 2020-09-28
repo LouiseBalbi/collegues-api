@@ -25,11 +25,12 @@ public class Collegue extends GenelarEntity {
 	}
 
 
-	public Collegue(String nom, String prenom, LocalDate dateNaissance, String photoUrl) {
+	public Collegue(String nom, String prenom, LocalDate dateNaissance, String email, String photoUrl) {
 		this.matricule = UUID.randomUUID().toString();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
+		this.email = email;
 		this.photoUrl = photoUrl;
 	}
 

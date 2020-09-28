@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.*;
 
 
 
- 
+@CrossOrigin
 @RestController
 @RequestMapping("collegues") // ressource "collegues"
 public class CollegueCtrl {
@@ -68,7 +68,7 @@ public class CollegueCtrl {
 
 		if (!resValid.hasErrors()) {
 			Collegue collegue = colServ.creerCollegue(colreq.getNom(), colreq.getPrenoms(),
-					colreq.getDateNaissance(), colreq.getPhotoUrl());
+					colreq.getDateNaissance(), colreq.getEmail(), colreq.getPhotoUrl());
 
 			return ResponseEntity.ok(collegue);
 		} else {

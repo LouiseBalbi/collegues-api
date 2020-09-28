@@ -98,8 +98,8 @@ public class CollegueService {
 	 */
 
 	@Transactional
-	public Collegue creerCollegue(String nom, String prenom, LocalDate dateNaissance, String photoUrl) {
-		Collegue collegue = new Collegue(nom, prenom, dateNaissance, photoUrl);
+	public Collegue creerCollegue(String nom, String prenom, LocalDate dateNaissance, String email, String photoUrl) {
+		Collegue collegue = new Collegue(nom, prenom, dateNaissance, email, photoUrl);
 
 		return colRepo.save(collegue);
 	}

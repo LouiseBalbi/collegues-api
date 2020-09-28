@@ -17,6 +17,7 @@ public class CollegueDto {
 	private String nom;
 	@NotBlank
 	private String prenom;
+	@NotNull
 	private String email;
 	@NotNull
 	@Past
