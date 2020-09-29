@@ -58,6 +58,22 @@ public class CollegueCtrl {
 	
 	
 	/**
+	 * url : [SERVER]/gallerie
+	 * @return un tableau de string
+	 */
+	@GetMapping("photos")
+	public List<PhotoResponseDto> listPhoto() {
+		List<PhotoResponseDto> res = new ArrayList<>();
+		for (Collegue col: colServ.getList()) {
+			PhotoResponseDto photoresponseDto = new PhotoResponseDto(col.getMatricule(), col.getPhotoUrl());
+			res.add(photoresponseDto);
+		}
+		return res;
+	}
+
+	
+	
+	/**
 	 * url : [SERVER]/collegue
 	 * @param collegueDto un objet collegueDto au format json
 	 * @return un objet collegueDto au format json
